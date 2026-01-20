@@ -1,1 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /*Primary  */
+  --color-Orange-Primary: #FF7D1A;
+  --color-Orange-Pale: #FFEDE0;
+
+  /*  Neutral*/
+  --color-Very-Dark-Blue: #1D2025;
+  --color-Dark-Grayish-Blue: #68707D;
+  --color-Light-Grayish-Blue: #F7F8FD;
+  --color-Whitee: #FFFFFF;
+
+  /* 75 opacity for lightbox background */
+  --color-Blackk: #000000;
+
+
+  /* font */
+
+  --font-Kumbh-Sans: 'Kumbh Sans', sans-serif;
+}
