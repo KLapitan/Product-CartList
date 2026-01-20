@@ -11,7 +11,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local/
-product-list-with-cart-main/
+ecommerce-podcut-page-main/
 
 # Editor directories and files
 .vscode/*
