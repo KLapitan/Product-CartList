@@ -11,7 +11,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local/
-ecommerce-podcut-page-main/
+ecommerce-product-page-main/
 
 # Editor directories and files
 .vscode/*
