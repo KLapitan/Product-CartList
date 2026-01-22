@@ -14,6 +14,8 @@ dist-ssr/
 
 ecommerce-product-page-main/
 
+README.md/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
