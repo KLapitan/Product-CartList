@@ -1,24 +1,102 @@
+import { useState } from "react"
+
+// make the product dynamically changeable 
+
+const productImages = [
+{
+  id: 0,
+  src: "image-product-1.jpg",
+  thumbnail: "image-product-1-thumbnail.jpg",
+  alt:"image1"
+
+},
+{
+  id:1 ,
+  src: "image-product-2.jpg",
+  thumbnail: "image-product-2-thumbnail.jpg",
+  alt:"image2"
+
+},
+{
+  id: 2,
+  src: "image-product-3.jpg",
+  thumbnail: "image-product-3-thumbnail.jpg",
+  alt:"image3"
+
+},
+{
+  id: 3,
+  src: "image-product-4.jpg",
+  thumbnail: "image-product-4-thumbnail.jpg",
+  alt:"image4"
+
+},
+]
+
+
+
 const ProductPage = () => {
+
+
+const [imageIndex ,setImageIndex] = useState(0)
+
+const currentImageActive = productImages[imageIndex]
+
+// const hideButton = imageIndex === 0 ? true : false
+
+
+
+const handleNextImage = () => {
+setImageIndex(prev => prev === productImages.length -1 ? 0 : prev + 1)
+
+}
+const handlePreviousImage = () => {
+setImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
+
+}
+
+
+
+
+
+
+
 return (
 <section className="lg:flex lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:mt-10">
 
 {/* prdocutpicture div */}
 <div className="lg:gap-3 lg:flex lg:flex-col ">
-<div className="h-70 relative  border  lg:h-100  lg:w-100 lg:rounded-xl">
-  <picture>
-  <img src="image-product-1.jpg" alt="product image" className="h-full w-full object-fit lg:rounded-xl" />
-  </picture>
+<div className="flex flex-row h-70 relative    lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden  ">
+  
+{productImages.length > 0 && (
+<img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} className="h-full w-full object-cover lg:rounded-xl" />
+
+)}
+
 
 {/* div for button */}
-<div className="absolute z-10 top-30 border left-0 -right-2 flex justify-between px-4 lg:top-46 lg:w-full" >
+<div className="absolute w-full z-10 top-34  left-0  flex justify-between px-2 lg:top-46 md:hidden lg:hidden" >
 {/* previous button */}
-<button className="bg-white w-9  h-9 rounded-full ">
+
+
+ 
+ 
+<button className="bg-white w-10  h-10  rounded-full" 
+onClick={handlePreviousImage}
+>
 <img src="icon-previous.svg" alt="previous button" className="place-self-center w-3 h-4 "/>
 </button>
+ 
+
 
 {/* next button */}
-<button className="bg-white w-10 h-10 rounded-full ml-1  ">
-<img src="icon-next.svg" alt="next button"className=" w-3 h-4 place-self-center " /></button>
+
+
+<button className= "bg-white w-10 h-10 rounded-full"
+onClick={handleNextImage} >
+<img src="icon-next.svg" alt="next button"className=" w-3 h-4 place-self-center " />
+</button>
+
 
 </div>
 
@@ -27,11 +105,24 @@ return (
 
 {/* product images */}
 
-<ul className="hidden lg:flex lg:flex-row lg:w-100 lg:gap-3 ">
+{/* <ul className="hidden lg:flex lg:flex-row lg:w-100 lg:gap-3 ">
   <li><img src="image-product-1-thumbnail.jpg" className="lg:rounded-lg " alt="image1" /></li>
   <li><img src="image-product-2-thumbnail.jpg " className="lg:rounded-lg"   alt="image2" /></li>
   <li><img src="image-product-3-thumbnail.jpg" className="lg:rounded-lg" alt="image3" /></li>
   <li><img src="image-product-4-thumbnail.jpg" className="lg:rounded-lg" alt="image4" /></li>
+
+</ul> */}
+
+<ul className="relative hidden lg:flex lg:flex-row lg:w-100 lg:gap-3" >
+{productImages.map((image) => (
+<li key={image.id}><img src={image.thumbnail} alt={image.alt} className="lg:rounded-lg z-0  "/>
+
+{currentImageActive === image && (
+
+<div className="absolute top-0 bg-Whitee/40 border-2 border-Orange-Primary  w-23 h-23 z-10 lg:rounded-lg "></div>
+)}
+</li>
+))}
 
 </ul>
 
