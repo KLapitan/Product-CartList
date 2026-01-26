@@ -69,7 +69,7 @@ return (
 <div className="flex flex-row h-70 relative    lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden  ">
   
 {productImages.length > 0 && (
-<img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} className="h-full w-full object-cover lg:rounded-xl" />
+<img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} className="h-full w-full object-fit lg:rounded-xl" />
 
 )}
 
