@@ -1,4 +1,5 @@
 import { useState } from "react"
+import ImagePreviewModal from "./ImagePreviewModal"
 
 // make the product dynamically changeable 
 
@@ -44,6 +45,7 @@ const currentImageActive = productImages[imageIndex]
 
 // const hideButton = imageIndex === 0 ? true : false
 
+const [showModal,setShowModal]=useState(false)
 
 
 const handleNextImage = () => {
@@ -56,6 +58,15 @@ setImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
 }
 
 
+const handleOpenModal = (e) => {
+
+setShowModal(true)
+console.log("modal opened")
+}
+
+const handleCloseModal = () => {
+setShowModal(false)
+}
 
 
 
@@ -69,7 +80,7 @@ return (
 <div className="flex flex-row h-70 relative    lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden  ">
   
 {productImages.length > 0 && (
-<img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} className="h-full w-full object-fit lg:rounded-xl" />
+<img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} onClick={handleOpenModal} className="h-full w-full object-fit lg:rounded-xl" />
 
 )}
 
@@ -115,7 +126,9 @@ onClick={handleNextImage} >
 
 <ul className="relative hidden lg:flex lg:flex-row lg:w-100 lg:gap-3" >
 {productImages.map((image) => (
-<li key={image.id}><img src={image.thumbnail} alt={image.alt} className="lg:rounded-lg z-0  "/>
+<li key={image.id} role="button" 
+onClick={handleOpenModal}
+><img src={image.thumbnail} alt={image.alt} className="lg:rounded-lg z-0  "/>
 
 {currentImageActive === image && (
 
@@ -178,6 +191,12 @@ Add to Cart</button>
 
 </div>
 </div>
+
+
+
+{showModal && (
+<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={imageIndex} currentImageActive={currentImageActive} />
+)}
 
 
 

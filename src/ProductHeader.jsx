@@ -26,7 +26,7 @@ return(
 <div className="hidden md:hidden lg:block">
 <ul className="lg:h-20 lg:items-center  lg:flex lg:flex-row lg:gap-5 lg:text-Dark-Grayish-Blue font-Kumbh-Sans  lg:text-md ">
 {navLinks.map((link,index) => (
-<li key={index} className=" hover:border-b-4  hover:text-black hover:border-b-Orange-Primary cursor-pointer hover:leading-20 ">{link}</li>
+<li key={index} className=" hover:border-b-4  hover:text-black  hover:translate-y-0 hover:border-b-Orange-Primary cursor-pointer hover:leading-20 ">{link}</li>
 ))}
 
 </ul>
