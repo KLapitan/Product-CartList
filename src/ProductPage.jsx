@@ -1,51 +1,88 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ImagePreviewModal from "./ImagePreviewModal"
 
 // make the product dynamically changeable 
 
-const productImages = [
-{
-  id: 0,
-  src: "image-product-1.jpg",
-  thumbnail: "image-product-1-thumbnail.jpg",
-  alt:"image1"
+// const productImages = [
+// {
+//   id: 0,
+//   src: "image-product-1.jpg",
+//   thumbnail: "image-product-1-thumbnail.jpg",
+//   alt:"image1"
 
-},
-{
-  id:1 ,
-  src: "image-product-2.jpg",
-  thumbnail: "image-product-2-thumbnail.jpg",
-  alt:"image2"
+// },
+// {
+//   id:1 ,
+//   src: "image-product-2.jpg",
+//   thumbnail: "image-product-2-thumbnail.jpg",
+//   alt:"image2"
 
-},
-{
-  id: 2,
-  src: "image-product-3.jpg",
-  thumbnail: "image-product-3-thumbnail.jpg",
-  alt:"image3"
+// },
+// {
+//   id: 2,
+//   src: "image-product-3.jpg",
+//   thumbnail: "image-product-3-thumbnail.jpg",
+//   alt:"image3"
 
-},
-{
-  id: 3,
-  src: "image-product-4.jpg",
-  thumbnail: "image-product-4-thumbnail.jpg",
-  alt:"image4"
+// },
+// {
+//   id: 3,
+//   src: "image-product-4.jpg",
+//   thumbnail: "image-product-4-thumbnail.jpg",
+//   alt:"image4"
 
-},
-]
+// },
+// ]
 
 
 
 const ProductPage = () => {
 
+// quantity state
+const [itemQuantity,setItemQuantity]=useState(0)
 
+
+// data of the product
+const [productData,setProductData] = useState(null)
+
+// get product images from product data
+const productImages = productData?.images ?? [];
+
+// image index state 
 const [imageIndex ,setImageIndex] = useState(0)
 
-const currentImageActive = productImages[imageIndex]
+const productThumbnails = productData?.thumbnails ?? [];
+
+
+
+
+
+
 
 // const hideButton = imageIndex === 0 ? true : false
 
 const [showModal,setShowModal]=useState(false)
+
+
+useEffect(() => {
+const fetchProductData = async () => {
+
+try{
+  const response = await fetch('/data.json')
+  const data = await response.json()
+  setProductData(data)
+
+}
+catch (error){
+console.error("Error fetching product data:", error)
+}
+
+
+}
+
+fetchProductData()
+}, [])
+
 
 
 const handleNextImage = () => {
@@ -58,7 +95,7 @@ setImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
 }
 
 
-const handleOpenModal = (e) => {
+const handleOpenModal = () => {
 
 setShowModal(true)
 console.log("modal opened")
@@ -68,6 +105,13 @@ const handleCloseModal = () => {
 setShowModal(false)
 }
 
+
+const handleIncreaseQuantity =() => {
+setItemQuantity(prev => prev +1)
+}
+const handleDecreaseQuantity =() => {
+setItemQuantity(prev => prev -1)
+}
 
 
 
@@ -79,10 +123,17 @@ return (
 <div className="lg:gap-3 lg:flex lg:flex-col ">
 <div className="flex flex-row h-70 relative    lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden  ">
   
-{productImages.length > 0 && (
+{/* {productImages.length > 0 && (
 <img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} onClick={handleOpenModal} className="h-full w-full object-fit lg:rounded-xl" />
 
-)}
+
+
+
+)} */}
+
+{productImages.length > 0  && (
+<img src={productImages[imageIndex]} alt="product image" className="h-full w-full object-fit lg:rounded-xl " onClick={handleOpenModal}/>
+) }
 
 
 {/* div for button */}
@@ -125,12 +176,12 @@ onClick={handleNextImage} >
 </ul> */}
 
 <ul className="relative hidden lg:flex lg:flex-row lg:w-100 lg:gap-3" >
-{productImages.map((image) => (
-<li key={image.id} role="button" 
+{productThumbnails.map((image,index) => (
+<li key={index} role="button" 
 onClick={handleOpenModal}
-><img src={image.thumbnail} alt={image.alt} className="lg:rounded-lg z-0  "/>
+><img src={image} alt="prodct thumnails" className="lg:rounded-lg z-0  "/>
 
-{currentImageActive === image && (
+{currentImageActive === index && (
 
 <div className="absolute top-0 bg-Whitee/40 border-2 border-Orange-Primary  w-23 h-23 z-10 lg:rounded-lg "></div>
 )}
@@ -141,6 +192,10 @@ onClick={handleOpenModal}
 
 
 </div>
+
+
+
+
 {/* product details */}
 <div className="p-3 font-Kumbh-Sans lg:w-100 border lg:h-sm lg:p-3 lg:flex-wrap "
 >
@@ -169,11 +224,17 @@ onClick={handleOpenModal}
 {/* quantity selector */}
 <div className="lg:flex lg:flex-row lg:items-center lg:gap-2 ">
 <span className="flex flex-row w-full lg:w-35 justify-between items-center bg-Light-Grayish-Blue rounded-lg h-12 font-bold p-3 my-4 border">
-<button className=" text-Orange-Primary text-2xl"><img src="icon-minus.svg" alt="minusitem" className="h-2 w-5" /></button>
-0
+
+
+<button className=" text-Orange-Primary text-2xl"><img src="icon-minus.svg" alt="minusitem" className="h-2 w-5"
+onClick={handleDecreaseQuantity}
+ /></button>
+{itemQuantity}
  
 
-<button className="font-bold  text-Orange-Primary text-2xl  text-center ">
+<button className="font-bold  text-Orange-Primary text-2xl  text-center " 
+onClick={handleIncreaseQuantity}
+>
 
 <img src="icon-plus.svg" alt="add" className="h-5" />
 </button>
@@ -195,7 +256,7 @@ Add to Cart</button>
 
 
 {showModal && (
-<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={imageIndex} currentImageActive={currentImageActive} />
+<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={imageIndex} currentImageActive={currentImageActive} onNext={handleNextImage} onPrevious={handlePreviousImage} />
 )}
 
 

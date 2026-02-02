@@ -2,15 +2,16 @@
 
 
 
-const ImagePreviewModal = ({onClose,productImages,currentImageActive}) => {
+const ImagePreviewModal = ({onClose,onNext,onPrevious, productImages,currentImageActive}) => {
 
 
 
 return(
-<div className="lg:fixed  lg:inset-0 lg:bg-black/65 lg:flex lg:items-center lg:justify-center lg:h-auto ">
+// modal background
+<div className="lg:fixed  lg:inset-0 lg:bg-black/65 lg:flex lg:items-center lg:justify-center lg:h-auto lg:z-20 ">
 
 {/* modal details */}
-  <div className=" lg:h-auto lg:w-auto lg:flex lg:flex-col  lg:rounded-lg lg:-mt-10 ">
+  <div className=" lg:h-auto lg:w-auto lg:flex lg:flex-col  lg:rounded-lg lg:-mt-10  lg:p-2">
 
   {/* closebutton */}
 <div className="lg:flex lg:flex-row lg:items-end lg:justify-end">
@@ -26,12 +27,36 @@ return(
 </button>
 </div>
 
+<div className="lg:relative">
 
     {/* product  */}
       {productImages.length > 0 && (
-        <img src={currentImageActive.src } alt={currentImageActive.alt} className="h-120 w-full object-fit lg:rounded-xl" />
+        <img src={currentImageActive.src } alt={currentImageActive.alt} className=" h-120 w-full object-fit lg:rounded-xl" />
       )}
 
+    <div className=" lg:lg:absolute lg:top-55 lg:flex lg:flex-row lg:w-132 lg:justify-between lg:z-40 lg:-ml-6">
+
+    {/* previous button */}
+      <button 
+      className="lg:w-10 lg:h-10 lg:rounded-full lg:bg-Whitee ">
+      <img src="icon-previous.svg"
+       alt="previous" 
+       className="lg:place-self-center" onClick={onPrevious} />
+       </button>
+
+    {/* next  button*/}
+      <button 
+      className="lg:w-10 lg:h-10 lg:rounded-full lg:bg-Whitee ">
+      <img src="icon-next.svg" 
+      alt="next-button" 
+      className="lg:place-self-center" 
+      onClick={onNext} />
+      </button>
+    
+    
+    </div>
+
+</div>
 
 
 
