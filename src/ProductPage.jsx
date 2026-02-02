@@ -41,6 +41,8 @@ const ProductPage = () => {
 // quantity state
 const [itemQuantity,setItemQuantity]=useState(0)
 
+const [addQuantity,setAddQuantity]=useState({})
+
 
 // data of the product
 const [productData,setProductData] = useState(null)
@@ -49,15 +51,15 @@ const [productData,setProductData] = useState(null)
 const productImages = productData?.images ?? [];
 
 // image index state 
-const [imageIndex ,setImageIndex] = useState(0)
+const [activeImageIndex ,setActiveImageIndex] = useState(0)
 
 const productThumbnails = productData?.thumbnails ?? [];
 
+const currentImageActive = productImages[activeImageIndex]
 
 
 
-
-
+// const [currentImageThumbnailActive,setCurrentImageThumbnailActive] = useState(null)
 
 // const hideButton = imageIndex === 0 ? true : false
 
@@ -71,6 +73,8 @@ try{
   const response = await fetch('/data.json')
   const data = await response.json()
   setProductData(data)
+
+console.log("Product data fetched:", data)
 
 }
 catch (error){
@@ -86,12 +90,11 @@ fetchProductData()
 
 
 const handleNextImage = () => {
-setImageIndex(prev => prev === productImages.length -1 ? 0 : prev + 1)
+setActiveImageIndex(prev => prev === productImages.length -1 ? 0 : prev + 1)
 
 }
 const handlePreviousImage = () => {
-setImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
-
+setActiveImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
 }
 
 
@@ -132,7 +135,7 @@ return (
 )} */}
 
 {productImages.length > 0  && (
-<img src={productImages[imageIndex]} alt="product image" className="h-full w-full object-fit lg:rounded-xl " onClick={handleOpenModal}/>
+<img src={productImages[activeImageIndex]} alt="product image" className="h-full w-full object-fit lg:rounded-xl " onClick={handleOpenModal}/>
 ) }
 
 
@@ -178,10 +181,16 @@ onClick={handleNextImage} >
 <ul className="relative hidden lg:flex lg:flex-row lg:w-100 lg:gap-3" >
 {productThumbnails.map((image,index) => (
 <li key={index} role="button" 
-onClick={handleOpenModal}
-><img src={image} alt="prodct thumnails" className="lg:rounded-lg z-0  "/>
+onClick={() => {
+handleOpenModal();
+setActiveImageIndex(index)
+}
+}
+><img src={image} alt="prodct thumnails" className="lg:rounded-lg z-0  lg:relative "/>
 
-{currentImageActive === index && (
+
+{/* we compare the current productimage index and thumbnail index */}
+{activeImageIndex === index && (
 
 <div className="absolute top-0 bg-Whitee/40 border-2 border-Orange-Primary  w-23 h-23 z-10 lg:rounded-lg "></div>
 )}
@@ -199,25 +208,24 @@ onClick={handleOpenModal}
 {/* product details */}
 <div className="p-3 font-Kumbh-Sans lg:w-100 border lg:h-sm lg:p-3 lg:flex-wrap "
 >
-  <p className="text-xs text-Dark-Grayish-Blue font-bold mb-2 tracking-wider lg:mt-20 lg:mb-4">
-  SNEAKER COMPANY</p>
+  <p className="text-xs text-Dark-Grayish-Blue font-bold mb-2 tracking-wider lg:mt-20 lg:mb-4">{productData?.company}
+  </p>
 
 
-  <p className="text-black font-extrabold text-2xl mb-2 lg:text-4xl lg:mb-7 ">Fall Limited Edition Sneakers</p>
+  <p className="text-black font-extrabold text-2xl mb-2 lg:text-4xl lg:mb-7 ">{productData?.name}</p>
 
 
-  <p className="text-sm text-Dark-Grayish-Blue tracking-tight mb-3 lg:mb-4">  These low-profile sneakers are your perfect casual wear companion. Featuring a 
-  durable rubber outer sole, they’ll withstand everything the weather can offer.</p>
+  <p className="text-sm text-Dark-Grayish-Blue tracking-tight mb-3 lg:mb-4">{productData?.description}</p>
 
 <div className="flex  justify-between items-center lg:flex-col lg:items-start lg:gap-3">
 
 <div className="flex flex-row gap-2 items-center ">
-  <span className="text-3xl  font-bold">$125.00</span>
-<span className="bg-black/75 rounded-lg text-md h-6 w-14 text-center font-bold text-white">50%</span>
+  <span className="text-3xl  font-bold">${productData?.currentPrice}</span>
+<span className="bg-black/75 rounded-lg text-md h-6 w-14 text-center font-bold text-white">{productData?.discount}%</span>
 </div>
 
 <div className="lg:mb-4">
-<span className="line-through text-Dark-Grayish-Blue text-md font-bold ">$250.00</span>
+<span className="line-through text-Dark-Grayish-Blue text-md font-bold ">${productData?.oldPrice}</span>
 </div>
 </div>
 
@@ -256,7 +264,7 @@ Add to Cart</button>
 
 
 {showModal && (
-<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={imageIndex} currentImageActive={currentImageActive} onNext={handleNextImage} onPrevious={handlePreviousImage} />
+<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={activeImageIndex} currentImageActive={currentImageActive} onNext={handleNextImage} onPrevious={handlePreviousImage} />
 )}
 
 
