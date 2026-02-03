@@ -1,10 +1,34 @@
 // modal it shows item preview when user click on image
+import { useProductContext } from "../hooks/ProductContext";
+import { useEffect } from "react"
 
 
 
-const ImagePreviewModal = ({onClose,onNext,onPrevious, productImages,currentImageActive}) => {
+const ImagePreviewModal = () => {
+
+const {handleCloseModal,handleNextImage, handlePreviousImage, currentImageActive , productImages }=useProductContext()
+
+useEffect(() => {
+
+const handleEscape =(event) => {
+if(event.key === 'Escape'){
+  handleCloseModal();
+}
+};
 
 
+// add when the modal open
+window.addEventListener("keydown", handleEscape);
+
+// remove when user unpress the escape button
+return () => {
+window.removeEventListener("keyup" , handleEscape)
+
+}
+
+
+
+},[handleCloseModal])
 
 return(
 // modal background
@@ -15,7 +39,7 @@ return(
 
   {/* closebutton */}
 <div className="lg:flex lg:flex-row lg:items-end lg:justify-end">
- <button className="group lg:relative lg:w-8 lg:h-8 lg:mb-2 cursor-pointer" onClick={onClose}>
+ <button className="group lg:relative lg:w-8 lg:h-8 lg:mb-2 cursor-pointer" onClick={handleCloseModal}>
   <img
     src="close-x-svgrepo-com.svg"
     className="lg:absolute lg:inset-0 lg:w-8 lg:h-8 opacity-100 group-hover:opacity-0 transition-opacity"
@@ -31,7 +55,7 @@ return(
 
     {/* product  */}
       {productImages.length > 0 && (
-        <img src={currentImageActive.src } alt={currentImageActive.alt} className=" h-120 w-full object-fit lg:rounded-xl" />
+        <img src={currentImageActive} alt={currentImageActive} className=" h-120 w-full object-fit lg:rounded-xl" />
       )}
 
     <div className=" lg:lg:absolute lg:top-55 lg:flex lg:flex-row lg:w-132 lg:justify-between lg:z-40 lg:-ml-6">
@@ -41,7 +65,7 @@ return(
       className="lg:w-10 lg:h-10 lg:rounded-full lg:bg-Whitee ">
       <img src="icon-previous.svg"
        alt="previous" 
-       className="lg:place-self-center" onClick={onPrevious} />
+       className="lg:place-self-center" onClick={handlePreviousImage} />
        </button>
 
     {/* next  button*/}
@@ -50,7 +74,7 @@ return(
       <img src="icon-next.svg" 
       alt="next-button" 
       className="lg:place-self-center" 
-      onClick={onNext} />
+      onClick={handleNextImage} />
       </button>
     
     
@@ -65,7 +89,7 @@ return(
    <ul className="lg:relative  lg:flex lg:flex-row lg:w-100 lg:gap-3 lg:ml-10 " >
    {productImages.map((image) => (
 <li key={image.id} 
-><img src={image.thumbnail} alt={image.alt} className="lg:rounded-lg lg:z-0  lg:w-20 lg:h-20 hover:bg-Orange-Pale "/>
+><img src={image} alt={image} className="lg:rounded-lg lg:z-0  lg:w-20 lg:h-20 hover:bg-Orange-Pale "/>
 
 {currentImageActive === image && (
 

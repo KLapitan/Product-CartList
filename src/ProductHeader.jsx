@@ -1,7 +1,13 @@
+import { useProductContext } from "./hooks/ProductContext"
+
 const ProdcutHeader = () => {
 
 const navLinks = ["Collections", "Men", "Women", "About", "Contact" ]
 
+
+const {cartNumberOfitems ,cartItems,itemsQuantity} =useProductContext()
+
+const cartQuantity = cartItems[0]?.quantity?? 0
 
 return(
 <section className="h-20 flex flex-row justify-between items-center  p-3 lg:p-0" >
@@ -36,10 +42,20 @@ return(
 
 
 
-<div className="flex flex-row gap-4 lg:gap-7 items-center justify-center border">
+<div className="flex flex-row gap-4 lg:gap-7 items-center justify-center ">
+
+<div className="relative ">
 <picture>
-<img src="icon-cart.svg" alt="cart-icon"  />
+<img src="icon-cart.svg" alt="cart-icon"  className="relative w-10" />
 </picture>
+
+<span
+  className={`${cartQuantity > 0 ? "block" : "hidden"} w-5 h-5 bg-red-400 absolute -top-2 left-6 rounded-full text-center ease-in text-xs font-Kumbh-Sans `}
+>
+  {cartQuantity}
+</span>
+
+</div>
 
 <picture>
 <img src="image-avatar.png" alt="avatar" className="w-8 h-8 lg:w-15 lg:h-15" />

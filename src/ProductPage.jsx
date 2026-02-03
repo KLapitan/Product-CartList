@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import ImagePreviewModal from "./ImagePreviewModal"
 
+import ImagePreviewModal from "./Modals/ImagePreviewModal"
+import { useProductContext } from "./hooks/ProductContext"
 // make the product dynamically changeable 
 
 // const productImages = [
@@ -38,84 +38,7 @@ import ImagePreviewModal from "./ImagePreviewModal"
 
 const ProductPage = () => {
 
-// quantity state
-const [itemQuantity,setItemQuantity]=useState(0)
-
-const [addQuantity,setAddQuantity]=useState({})
-
-
-// data of the product
-const [productData,setProductData] = useState(null)
-
-// get product images from product data
-const productImages = productData?.images ?? [];
-
-// image index state 
-const [activeImageIndex ,setActiveImageIndex] = useState(0)
-
-const productThumbnails = productData?.thumbnails ?? [];
-
-const currentImageActive = productImages[activeImageIndex]
-
-
-
-// const [currentImageThumbnailActive,setCurrentImageThumbnailActive] = useState(null)
-
-// const hideButton = imageIndex === 0 ? true : false
-
-const [showModal,setShowModal]=useState(false)
-
-
-useEffect(() => {
-const fetchProductData = async () => {
-
-try{
-  const response = await fetch('/data.json')
-  const data = await response.json()
-  setProductData(data)
-
-console.log("Product data fetched:", data)
-
-}
-catch (error){
-console.error("Error fetching product data:", error)
-}
-
-
-}
-
-fetchProductData()
-}, [])
-
-
-
-const handleNextImage = () => {
-setActiveImageIndex(prev => prev === productImages.length -1 ? 0 : prev + 1)
-
-}
-const handlePreviousImage = () => {
-setActiveImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
-}
-
-
-const handleOpenModal = () => {
-
-setShowModal(true)
-console.log("modal opened")
-}
-
-const handleCloseModal = () => {
-setShowModal(false)
-}
-
-
-const handleIncreaseQuantity =() => {
-setItemQuantity(prev => prev +1)
-}
-const handleDecreaseQuantity =() => {
-setItemQuantity(prev => prev -1)
-}
-
+const {productData,productImages,activeImageIndex,productThumbnails,itemQuantity,showModal,setActiveImageIndex,handleNextImage, handlePreviousImage, handleOpenModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart}=useProductContext()
 
 
 
@@ -237,8 +160,8 @@ setActiveImageIndex(index)
 <button className=" text-Orange-Primary text-2xl"><img src="icon-minus.svg" alt="minusitem" className="h-2 w-5"
 onClick={handleDecreaseQuantity}
  /></button>
-{itemQuantity}
- 
+
+ {itemQuantity}
 
 <button className="font-bold  text-Orange-Primary text-2xl  text-center " 
 onClick={handleIncreaseQuantity}
@@ -250,7 +173,7 @@ onClick={handleIncreaseQuantity}
 </span>
 
 
-<button className="bg-Orange-Primary w-full lg:w-60 rounded-lg h-12 font-bold mb-20 lg:mb-0 lg:shadow-none shadow-[0_13px_20px_rgba(255,165,0,0.5)] flex flex-row justify-center items-center gap-3 text-black"> 
+<button className="bg-Orange-Primary w-full lg:w-60 rounded-lg h-12 font-bold mb-20 lg:mb-0 lg:shadow-none shadow-[0_13px_20px_rgba(255,165,0,0.5)] flex flex-row justify-center items-center gap-3 text-black" onClick={handleAddToCart}> 
 <picture>
 <img src="icon-cart.svg" alt="cart"  className="w-4 "/>
 </picture>
@@ -264,7 +187,7 @@ Add to Cart</button>
 
 
 {showModal && (
-<ImagePreviewModal onClose={handleCloseModal} productImages={productImages} imageIndex={activeImageIndex} currentImageActive={currentImageActive} onNext={handleNextImage} onPrevious={handlePreviousImage} />
+<ImagePreviewModal />
 )}
 
 
