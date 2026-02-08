@@ -1,6 +1,6 @@
 
-import ImagePreviewModal from "./Modals/ImagePreviewModal"
-import { useProductContext } from "./hooks/ProductContext"
+import ImagePreviewModal from "../Modals/ImagePreviewModal"
+import { useProductContext } from "../hooks/ProductContext"
 // make the product dynamically changeable 
 
 // const productImages = [
@@ -38,16 +38,16 @@ import { useProductContext } from "./hooks/ProductContext"
 
 const ProductPage = () => {
 
-const {productData,productImages,activeImageIndex,productThumbnails,itemQuantity,showModal,setActiveImageIndex,handleNextImage, handlePreviousImage, handleOpenModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart}=useProductContext()
+const {productData,productImages,activeImageIndex,productThumbnails,itemQuantity,showModal,setActiveImageIndex,handleNextImage, handlePreviousImage,handleOpenModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart}=useProductContext()
 
 
 
 return (
-<section className="lg:flex lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:mt-10">
+<section className="lg:flex lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:mt-10  ">
 
 {/* prdocutpicture div */}
-<div className="lg:gap-3 lg:flex lg:flex-col ">
-<div className="flex flex-row h-70 relative    lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden  ">
+<div className="lg:gap-3 lg:flex lg:flex-col z-0 ">
+<div className="flex flex-row h-70 lg:relative  lg:h-100  lg:w-100 lg:rounded-xl overflow-hidden ">
   
 {/* {productImages.length > 0 && (
 <img src={productImages[imageIndex].src } alt={productImages[imageIndex].alt} onClick={handleOpenModal} className="h-full w-full object-fit lg:rounded-xl" />
@@ -63,7 +63,7 @@ return (
 
 
 {/* div for button */}
-<div className="absolute w-full z-10 top-34  left-0  flex justify-between px-2 lg:top-46 md:hidden lg:hidden" >
+<div className="absolute w-full z-10 top-54  left-0  flex justify-between px-2 lg:top-46 md:hidden lg:hidden " >
 {/* previous button */}
 
 
@@ -72,7 +72,7 @@ return (
 <button className="bg-white w-10  h-10  rounded-full" 
 onClick={handlePreviousImage}
 >
-<img src="icon-previous.svg" alt="previous button" className="place-self-center w-3 h-4 "/>
+<img src="icon-previous.svg" alt="previous button" className="place-self-center w-3 h-4  "/>
 </button>
  
 
@@ -129,7 +129,7 @@ setActiveImageIndex(index)
 
 
 {/* product details */}
-<div className="p-3 font-Kumbh-Sans lg:w-100 border lg:h-sm lg:p-3 lg:flex-wrap "
+<div className="p-4 font-Kumbh-Sans lg:w-100  lg:h-sm lg:p-3 lg:flex-wrap "
 >
   <p className="text-xs text-Dark-Grayish-Blue font-bold mb-2 tracking-wider lg:mt-20 lg:mb-4">{productData?.company}
   </p>
@@ -142,19 +142,19 @@ setActiveImageIndex(index)
 
 <div className="flex  justify-between items-center lg:flex-col lg:items-start lg:gap-3">
 
-<div className="flex flex-row gap-2 items-center ">
-  <span className="text-3xl  font-bold">${productData?.currentPrice}</span>
-<span className="bg-black/75 rounded-lg text-md h-6 w-14 text-center font-bold text-white">{productData?.discount}%</span>
+<div className="flex flex-row gap-3 items-center ">
+  <span className="text-3xl  font-bold">${productData?.currentPrice}.00</span>
+<span className="bg-black rounded-lg text-sm h-7 w-12 text-center p-2 leading-3 font-bold  text-white">{productData?.discount}%</span>
 </div>
 
 <div className="lg:mb-4">
-<span className="line-through text-Dark-Grayish-Blue text-md font-bold ">${productData?.oldPrice}</span>
+<span className="line-through text-Dark-Grayish-Blue text-md font-bold ">${productData?.oldPrice}.00</span>
 </div>
 </div>
 
 {/* quantity selector */}
 <div className="lg:flex lg:flex-row lg:items-center lg:gap-2 ">
-<span className="flex flex-row w-full lg:w-35 justify-between items-center bg-Light-Grayish-Blue rounded-lg h-12 font-bold p-3 my-4 border">
+<span className="flex flex-row w-full lg:w-35 justify-between items-center bg-Light-Grayish-Blue rounded-lg h-12 font-bold p-3 my-4 ">
 
 
 <button className=" text-Orange-Primary text-2xl"><img src="icon-minus.svg" alt="minusitem" className="h-2 w-5"
@@ -186,10 +186,8 @@ Add to Cart</button>
 
 
 
-{showModal && (
-<ImagePreviewModal />
-)}
-
+{showModal && 
+<ImagePreviewModal />}
 
 
 </section>

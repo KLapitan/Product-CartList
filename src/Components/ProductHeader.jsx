@@ -1,11 +1,12 @@
-import { useProductContext } from "./hooks/ProductContext"
+import { useProductContext } from "../hooks/ProductContext"
+import LinkModal from "../Modals/LinkModal"
+import ProductCartItemList from "../Components/Product-cart-list"
+
 
 const ProdcutHeader = () => {
 
-const navLinks = ["Collections", "Men", "Women", "About", "Contact" ]
 
-
-const {cartNumberOfitems ,cartItems,itemsQuantity} =useProductContext()
+const {cartItems,handleOpenHumburgerModal,showLinkModal,navLinks, handleTogggleCartItemList ,itemCartList} =useProductContext()
 
 const cartQuantity = cartItems[0]?.quantity?? 0
 
@@ -15,10 +16,10 @@ return(
 
 <div className="lg:flex lg:flex-row lg:gap-10 lg:items-center  lg:h-20 ">
 
-<div className="flex flex-row  items-center  gap-2 border">
+<div className="flex flex-row  items-center  gap-2  relative" >
 {/* hambuger menu */}
 <picture>
-<img src="icon-menu.svg" alt="humberger menu" />
+<img src="icon-menu.svg" alt="humberger menu"  onClick={handleOpenHumburgerModal} className="lg:hidden md:hidden"/>
 </picture>
 
 {/* logo sneakers */}
@@ -26,6 +27,10 @@ return(
 <img src="logo.svg" alt=" logo" />
 </picture>
 </div>
+
+
+
+
 
 
 {/* nav links */}
@@ -46,24 +51,27 @@ return(
 
 <div className="relative ">
 <picture>
-<img src="icon-cart.svg" alt="cart-icon"  className="relative w-10" />
+<img src="icon-cart.svg" alt="cart-icon" onClick={handleTogggleCartItemList} className="relative w-10 cursor-pointer" />
 </picture>
 
 <span
-  className={`${cartQuantity > 0 ? "block" : "hidden"} w-5 h-5 bg-red-400 absolute -top-2 left-6 rounded-full text-center ease-in text-xs font-Kumbh-Sans `}
+  className={`${cartQuantity > 0 ? "block" : "hidden"} w-5 h-4 bg-Orange-Primary absolute -top-2 left-6 rounded-full text-center text-white ease-in text-xs font-Kumbh-Sans `}
 >
   {cartQuantity}
 </span>
 
 </div>
 
+
 <picture>
-<img src="image-avatar.png" alt="avatar" className="w-8 h-8 lg:w-15 lg:h-15" />
+<img src="image-avatar.png" alt="avatar" className="w-8 h-8 lg:w-15 lg:h-15 hover:ring-1 " />
 </picture>
 
 </div>
 
+{showLinkModal && <LinkModal />}
 
+{itemCartList && <ProductCartItemList />}
 </section>
 )
 }

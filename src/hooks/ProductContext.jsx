@@ -1,5 +1,13 @@
 import { createContext, useContext ,useEffect ,useState } from "react";
 
+
+const navLinks = ["Collections", "Men", "Women", "About", "Contact" ]
+
+
+// so all the logic and data where based on how many items on the cart thats why the add and delete cart was not having a arguement value  
+
+// normally we passed some id on this function but since we only have one product and one cart item we can just directly delete the cart item without passing any id or value since we only have one cart item and one product data
+
 const ProductContext = createContext()
 
 
@@ -33,7 +41,14 @@ const [cartNumberOfItems,setCartNumberOfItems]=useState(false)
 
 // const hideButton = imageIndex === 0 ? true : false
 
+// immage preview modal state
 const [showModal,setShowModal]=useState(false)
+
+//  hamburger modal state
+const [showLinkModal,setShowLinkModal]=useState(false)
+
+// cart item list modal state
+const [itemCartList,setItemCartList]=useState(false)
 
 
 useEffect(() => {
@@ -65,6 +80,22 @@ setActiveImageIndex(prev => prev === productImages.length -1 ? 0 : prev + 1)
 }
 const handlePreviousImage = () => {
 setActiveImageIndex(prev  => prev === 0 ? productImages.length - 1 : prev - 1)
+}
+
+const handleTogggleCartItemList = () => {
+setItemCartList(prev => !prev)
+}
+
+
+
+const handleOpenHumburgerModal =() => {
+setShowLinkModal(true)
+console.log("humberger modal opened")
+}
+
+const handleCloseHumburgerModal =() => {
+
+setShowLinkModal(false)
 }
 
 
@@ -117,9 +148,18 @@ setCartNumberOfItems(true)
 console.log("Cart Items:", updateQuantityObject)
 
 }
+
+const handleDeleteCartitem = () => {
+setCartItems([])
+setProductQuantity({quantity: 0})
+console.log("Cart item deleted")
+}
+
+
+
 return (
 
-<ProductContext.Provider value={{productData, productQuantity,productImages,activeImageIndex,productThumbnails,currentImageActive,itemQuantity,cartItems,showModal,cartNumberOfItems,setActiveImageIndex,handleNextImage, handlePreviousImage, handleOpenModal,handleCloseModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart}} >
+<ProductContext.Provider value={{navLinks,productData, productQuantity,productImages,activeImageIndex,productThumbnails,currentImageActive,itemQuantity,cartItems,showModal,cartNumberOfItems,showLinkModal,itemCartList,setActiveImageIndex,handleNextImage, handlePreviousImage,handleOpenHumburgerModal,handleCloseHumburgerModal,handleOpenModal,handleCloseModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart, handleTogggleCartItemList,handleDeleteCartitem}} >
 
 
 {children}
