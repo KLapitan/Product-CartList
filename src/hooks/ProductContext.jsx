@@ -51,6 +51,12 @@ const [showLinkModal,setShowLinkModal]=useState(false)
 const [itemCartList,setItemCartList]=useState(false)
 
 
+const [isCheckOut,setIsCheckOut] = useState(false)
+
+const [timeThankyouMessage,setTimeThankyouMessage] = useState(5)
+
+
+
 useEffect(() => {
 const fetchProductData = async () => {
 
@@ -152,14 +158,27 @@ console.log("Cart Items:", updateQuantityObject)
 const handleDeleteCartitem = () => {
 setCartItems([])
 setProductQuantity({quantity: 0})
-console.log("Cart item deleted")
+console.log("Cart item deleted", itemQuantity)
+
+}
+
+const handleCheckOut = () => {
+
+const total = cartItems.reduce((sum,item) => sum + item.price * item.quantity,0)
+
+const updatedTotal = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+console.log("shopping cart checkout",updatedTotal)
+setIsCheckOut(true)
+setItemCartList(false)
+setCartItems([])
+setProductQuantity({quantity: 0})
 }
 
 
 
 return (
 
-<ProductContext.Provider value={{navLinks,productData, productQuantity,productImages,activeImageIndex,productThumbnails,currentImageActive,itemQuantity,cartItems,showModal,cartNumberOfItems,showLinkModal,itemCartList,setActiveImageIndex,handleNextImage, handlePreviousImage,handleOpenHumburgerModal,handleCloseHumburgerModal,handleOpenModal,handleCloseModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart, handleTogggleCartItemList,handleDeleteCartitem}} >
+<ProductContext.Provider value={{navLinks,productData, productQuantity,productImages,activeImageIndex,productThumbnails,currentImageActive,itemQuantity,cartItems,showModal,cartNumberOfItems,showLinkModal,itemCartList,setActiveImageIndex,handleNextImage, handlePreviousImage,handleOpenHumburgerModal,handleCloseHumburgerModal,handleOpenModal,handleCloseModal,handleIncreaseQuantity, handleDecreaseQuantity, handleAddToCart, handleTogggleCartItemList,handleDeleteCartitem,handleCheckOut,isCheckOut,timeThankyouMessage,setTimeThankyouMessage,setIsCheckOut}} >
 
 
 {children}

@@ -14,7 +14,7 @@ return(
 <section className="h-20 flex flex-row justify-between items-center  p-3 lg:p-0" >
 
 
-<div className="lg:flex lg:flex-row lg:gap-10 lg:items-center  lg:h-20 ">
+<div className="md:flex md:flex-row md:gap-5 lg:flex lg:flex-row lg:gap-10 lg:items-center  lg:h-20 ">
 
 <div className="flex flex-row  items-center  gap-2  relative" >
 {/* hambuger menu */}
@@ -34,10 +34,10 @@ return(
 
 
 {/* nav links */}
-<div className="hidden md:hidden lg:block">
-<ul className="lg:h-20 lg:items-center  lg:flex lg:flex-row lg:gap-5 lg:text-Dark-Grayish-Blue font-Kumbh-Sans  lg:text-md ">
+<div className="hidden md:block lg:block">
+<ul className="md:flex md:flex-row md:gap-10 md:text-Dark-Grayish-Blue md:h-20 md:items-center   lg:h-20 lg:items-center  lg:flex lg:flex-row lg:gap-5 lg:text-Dark-Grayish-Blue font-Kumbh-Sans  lg:text-md ">
 {navLinks.map((link,index) => (
-<li key={index} className=" hover:border-b-4  hover:text-black  hover:translate-y-0 hover:border-b-Orange-Primary cursor-pointer hover:leading-20 ">{link}</li>
+<li key={index} className=" hover:border-b-4  hover:text-black  hover:translate-y-0 hover:border-b-Orange-Primary cursor-pointer hover:leading-20">{link}</li>
 ))}
 
 </ul>
@@ -47,15 +47,15 @@ return(
 
 
 
-<div className="flex flex-row gap-4 lg:gap-7 items-center justify-center ">
+<div className="flex flex-row gap-4 lg:gap-7 items-center justify-center  md:w-30 mr-2">
 
-<div className="relative ">
+<div className="relative  ">
 <picture>
-<img src="icon-cart.svg" alt="cart-icon" onClick={handleTogggleCartItemList} className="relative w-10 cursor-pointer" />
+<img src="icon-cart.svg" alt="cart-icon" onClick={handleTogggleCartItemList} className="relative w-5 lg:w-6 cursor-pointer" />
 </picture>
 
 <span
-  className={`${cartQuantity > 0 ? "block" : "hidden"} w-5 h-4 bg-Orange-Primary absolute -top-2 left-6 rounded-full text-center text-white ease-in text-xs font-Kumbh-Sans `}
+  className={`${cartQuantity > 0 ? "block" : "hidden"} w-5 h-4 bg-Orange-Primary absolute -top-2 left-2 lg:left-3 rounded-full text-center text-white ease-in text-xs font-Kumbh-Sans `}
 >
   {cartQuantity}
 </span>
@@ -64,7 +64,7 @@ return(
 
 
 <picture>
-<img src="image-avatar.png" alt="avatar" className="w-8 h-8 lg:w-15 lg:h-15 hover:ring-1 " />
+<img src="image-avatar.png" alt="avatar" className="w-8 h-8  lg:w-13 lg:h-13 rounded-full active:ring-3 active:ring-offset-3  active:ring-Orange-Primary  cursor-pointer " />
 </picture>
 
 </div>

@@ -32,7 +32,7 @@ window.removeEventListener("keyup" , handleEscape)
 
 return(
 // modal background
-<div className="hidden lg:fixed  lg:inset-0 lg:bg-black/65 lg:flex lg:items-center lg:justify-center lg:h-auto lg:z-40 ">
+<div className="hidden md:hidden lg:fixed  lg:inset-0 lg:bg-black/65 lg:flex lg:items-center lg:justify-center lg:h-auto lg:z-40 ">
 
 {/* modal details */}
   <div className=" hidden lg:h-auto lg:w-auto lg:flex lg:flex-col  lg:rounded-lg lg:-mt-10  lg:p-2">

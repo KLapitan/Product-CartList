@@ -19,4 +19,8 @@
   /* font */
 
   --font-Kumbh-Sans: 'Kumbh Sans', sans-serif;
+
+
+  --breakpoint-xs: 450px;
+
 }

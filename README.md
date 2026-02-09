@@ -1,9 +1,9 @@
-Product Cart list
+Product Cart-list Challange for frontEnMentor
 
-<!-- todo   -->
+cart filled state and empty state
 
-- meduim ,large design breakpoint
+product modal navlink modal state
 
-- make it dynamically ui
+carousel image thumbnail of the singel product
 
-- make the buttons and navs working
+and click image for image preview modal
